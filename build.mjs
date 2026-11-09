@@ -161,7 +161,7 @@ const destaques = projetos.filter((p) => yes(p.destaque)).slice(0, 6);
 const servicos = [
   ['Identidade e design', 'Identidade visual, sistemas gráficos, materiais institucionais e peças de comunicação.', 'edificio-paris'],
   ['Vídeo e movimento', 'Vídeos institucionais, campanhas, edição e motion graphics.', ''],
-  ['Fotografia e conteúdo', 'Fotografia, captação aérea e conteúdos para plataformas digitais.', 'chocolate'],
+  ['Fotografia e conteúdo', 'Fotografia, captação aérea e conteúdos para plataformas digitais.', 'prosperous'],
 ];
 const processo = [
   ['Entender', 'Conhecer a marca, o público e o objetivo.'],

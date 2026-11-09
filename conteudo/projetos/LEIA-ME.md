@@ -23,7 +23,7 @@ As imagens ficam na pasta `media/`. Ao guardar no GitHub, o site atualiza sozinh
 
 ## Projetos vindos do Behance
 
-Os projetos atuais foram importados do Behance (behance.net/herminimiranda) em novembro de 2026.
+Os projetos atuais são os de 2025 e 2026 do Behance (behance.net/herminimiranda), importados em novembro de 2026. Os mais antigos ficam só no Behance.
 As imagens continuam alojadas no Behance; se apagar um projeto lá, as imagens desaparecem aqui.
 Para acrescentar um projeto novo do Behance, copie um destes ficheiros e troque o título,
 a capa e os links das imagens (ou peça ao Claude para importar).

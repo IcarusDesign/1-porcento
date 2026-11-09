@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>1 PORCENTO</title>
+  <meta name="description" content="1 PORCENTO — página pessoal.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #141414;        /* fundo do logo */
+      --bg-soft: #1d1d1c;
+      --yellow: #EEE14B;    /* amarelo do logo */
+      --text: #F4F2E8;
+      --muted: #9a998f;
+      --line: #2c2c2a;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: Inter, system-ui, sans-serif;
+      font-size: 17px;
+      line-height: 1.6;
+    }
+    a { color: inherit; }
+    .wrap { max-width: 1080px; margin: 0 auto; padding: 0 24px; }
+
+    /* Navegação */
+    nav { position: sticky; top: 0; z-index: 10; background: rgba(20,20,20,.9); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); }
+    nav .wrap { display: flex; align-items: center; justify-content: space-between; height: 64px; }
+    nav ul { display: flex; gap: 28px; list-style: none; }
+    nav ul a { text-decoration: none; font-family: Oswald, sans-serif; font-weight: 500; letter-spacing: .04em; text-transform: uppercase; font-size: 15px; color: var(--muted); }
+    nav ul a:hover { color: var(--yellow); }
+
+    /* Logo em HTML (trocar pelo arquivo oficial quando houver) */
+    .logo { display: inline-flex; align-items: center; gap: .18em; text-decoration: none; font-family: Oswald, sans-serif; font-weight: 700; line-height: 1; color: var(--yellow); }
+    .logo .mark { background: var(--yellow); color: var(--bg); border-radius: 0 .18em 0 0; padding: .06em .22em .02em; font-style: italic; }
+    .logo .word { text-transform: uppercase; letter-spacing: -.01em; }
+    nav .logo { font-size: 26px; }
+
+    /* Hero */
+    .hero { min-height: calc(100vh - 64px); display: flex; align-items: center; padding: 80px 0; }
+    .hero .logo { font-size: clamp(56px, 13vw, 150px); }
+    .hero p { margin-top: 32px; max-width: 560px; font-size: clamp(18px, 2.2vw, 22px); color: var(--muted); }
+    .hero p strong { color: var(--text); font-weight: 500; }
+    .btn { display: inline-block; margin-top: 40px; padding: 14px 28px; background: var(--yellow); color: var(--bg); text-decoration: none; font-family: Oswald, sans-serif; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; border-radius: 4px; transition: transform .15s; }
+    .btn:hover { transform: translateY(-2px); }
+
+    /* Seções */
+    section { padding: 100px 0; border-top: 1px solid var(--line); }
+    h2 { font-family: Oswald, sans-serif; font-weight: 700; text-transform: uppercase; font-size: clamp(36px, 6vw, 64px); line-height: 1; color: var(--yellow); margin-bottom: 40px; }
+    .about { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; }
+    .about p + p { margin-top: 16px; }
+    .stat { font-family: Oswald, sans-serif; font-weight: 700; font-size: clamp(80px, 14vw, 160px); line-height: .9; color: var(--yellow); }
+    .stat-label { color: var(--muted); margin-top: 8px; }
+
+    .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+    .card { background: var(--bg-soft); border: 1px solid var(--line); border-radius: 8px; padding: 28px; }
+    .card .num { font-family: Oswald, sans-serif; color: var(--yellow); font-size: 15px; letter-spacing: .08em; }
+    .card h3 { font-family: Oswald, sans-serif; font-weight: 500; text-transform: uppercase; font-size: 24px; margin: 8px 0 10px; }
+    .card p { color: var(--muted); font-size: 16px; }
+
+    .links { display: flex; flex-wrap: wrap; gap: 14px; }
+    .links a { padding: 12px 22px; border: 1px solid var(--yellow); border-radius: 4px; text-decoration: none; font-family: Oswald, sans-serif; text-transform: uppercase; letter-spacing: .05em; color: var(--yellow); transition: background .15s, color .15s; }
+    .links a:hover { background: var(--yellow); color: var(--bg); }
+
+    footer { padding: 40px 0; border-top: 1px solid var(--line); color: var(--muted); font-size: 14px; }
+    footer .wrap { display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; }
+
+    @media (max-width: 760px) {
+      nav ul { gap: 16px; }
+      nav ul li:first-child { display: none; }
+      .about, .cards { grid-template-columns: 1fr; }
+      section { padding: 72px 0; }
+      .wrap { padding: 0 16px; }
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="wrap">
+      <a class="logo" href="#topo" aria-label="1 PORCENTO"><span class="mark">1.</span><span class="word">Porcento</span></a>
+      <ul>
+        <li><a href="#sobre">Sobre</a></li>
+        <li><a href="#ideia">A ideia</a></li>
+        <li><a href="#contato">Contato</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <header class="hero" id="topo">
+    <div class="wrap">
+      <h1 class="logo"><span class="mark">1.</span><span class="word">Porcento</span></h1>
+      <p><strong>[Frase de apresentação]</strong> — escreva aqui em uma ou duas linhas quem você é e o que faz.</p>
+      <a class="btn" href="#contato">Fale comigo</a>
+    </div>
+  </header>
+
+  <section id="sobre">
+    <div class="wrap">
+      <h2>Sobre</h2>
+      <div class="about">
+        <div>
+          <p>[Seu texto] Conte sua história: de onde você vem, o que faz hoje e o que te move.</p>
+          <p>[Seu texto] Um segundo parágrafo sobre seus objetivos ou o que as pessoas encontram aqui.</p>
+        </div>
+        <div>
+          <div class="stat">1%</div>
+          <p class="stat-label">[Explique o nome — por exemplo, “um pouco melhor a cada dia”.]</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="ideia">
+    <div class="wrap">
+      <h2>A ideia</h2>
+      <div class="cards">
+        <div class="card"><div class="num">01</div><h3>[Tópico]</h3><p>[Descrição curta.]</p></div>
+        <div class="card"><div class="num">02</div><h3>[Tópico]</h3><p>[Descrição curta.]</p></div>
+        <div class="card"><div class="num">03</div><h3>[Tópico]</h3><p>[Descrição curta.]</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contato">
+    <div class="wrap">
+      <h2>Contato</h2>
+      <div class="links">
+        <a href="#">Instagram</a>
+        <a href="#">YouTube</a>
+        <a href="#">TikTok</a>
+        <a href="#">E-mail</a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="wrap">
+      <a class="logo" href="#topo" style="font-size:20px"><span class="mark">1.</span><span class="word">Porcento</span></a>
+      <span>© <span id="ano"></span> 1 PORCENTO</span>
+    </div>
+  </footer>
+  <script>document.getElementById('ano').textContent = new Date().getFullYear();</script>
+</body>
+</html>

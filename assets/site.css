@@ -254,3 +254,22 @@ button, input, select, textarea { font: inherit; color: inherit; }
   .botao { width: 100%; text-align: center; }
   .acoes .ligacao { margin: 0 auto; }
 }
+
+/* ---------- Behance / todos os projetos ---------- */
+.media--natural { background: var(--cinza); }
+.media--natural img { height: auto; }
+.caso__corpo > .galeria { margin: 0 0 clamp(8px, 1.2vw, 16px); }
+.caso__corpo > .galeria:first-child { margin-top: 0; }
+.caso__corpo .media--natural { border-radius: 0; }
+.caso__corpo > .galeria:first-child .media--natural { border-radius: var(--canto); }
+.projetos__mais { display: flex; flex-wrap: wrap; align-items: center; gap: 16px 28px; margin-top: clamp(48px, 6vw, 80px); }
+.todos { padding-bottom: 0; }
+.projetos--todos { padding-top: clamp(40px, 5vw, 64px); }
+.grelha-projetos--tres { grid-template-columns: repeat(3, 1fr); }
+.filtros { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 32px; }
+.filtros[hidden] { display: none; }
+.filtros button { border: 1.5px solid var(--preto); background: none; padding: 8px 14px; font-size: 15px; font-weight: 500; cursor: pointer; border-radius: 0 10px 0 0; transition: background var(--rapido), color var(--rapido); }
+.filtros button[aria-pressed="true"], .filtros button:hover { background: var(--preto); color: var(--amarelo); }
+.projeto[hidden] { display: none; }
+@media (max-width: 900px) { .grelha-projetos--tres { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 640px) { .grelha-projetos--tres { grid-template-columns: 1fr; } .filtros { flex-wrap: nowrap; overflow-x: auto; margin-right: -16px; padding-right: 16px; } .filtros button { white-space: nowrap; min-height: 44px; } }

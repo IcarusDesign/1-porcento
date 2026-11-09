@@ -27,8 +27,19 @@ function media(src, alt, ratio = '16/9') {
   if (!src) return `<div class="media media--vazio" style="aspect-ratio:${ratio}"><span>${esc(alt || 'Imagem do projeto')}</span></div>`;
   if (/\.(mp4|webm)$/i.test(src))
     return `<div class="media" style="aspect-ratio:${ratio}"><video src="${url(src)}" muted loop playsinline preload="none" data-auto aria-label="${esc(alt)}"></video><button class="video-pausa" type="button" aria-label="Pausar vídeo">Pausar</button></div>`;
+  if (!ratio) return `<div class="media media--natural"><img src="${url(src)}" alt="${esc(alt)}" loading="lazy" decoding="async"></div>`;
   return `<div class="media" style="aspect-ratio:${ratio}"><img src="${url(src)}" alt="${esc(alt)}" loading="lazy" decoding="async"></div>`;
 }
+// Agrupa categorias parecidas para os filtros
+const grupo = (c = '') =>
+  /log[óo]tipo|identidade/i.test(c) ? 'Identidade e logótipos'
+  : /social/i.test(c) ? 'Social media'
+  : /capa/i.test(c) ? 'Capas de álbum'
+  : /cartaz/i.test(c) ? 'Cartazes'
+  : /artwork|ilustra|fotografia/i.test(c) ? 'Artwork'
+  : /v[íi]deo|motion/i.test(c) ? 'Vídeo'
+  : 'Design gráfico';
+const primeiraImagem = (body) => (body.match(/!\[[^\]]*\]\(([^)]+)\)/) || [])[1];
 
 // Markdown mínimo: ## títulos, parágrafos, listas, imagens (lado a lado se na mesma linha)
 function markdown(md) {
@@ -39,7 +50,7 @@ function markdown(md) {
     const imgs = [...b.matchAll(/!\[([^\]]*)\]\(([^)]*)\)/g)];
     if (imgs.length && b.replace(/!\[[^\]]*\]\([^)]*\)/g, '').trim() === '') {
       const cls = imgs.length > 1 ? 'galeria galeria--duas' : 'galeria';
-      return `<div class="${cls} revela">${imgs.map((m) => media(m[2], m[1], imgs.length > 1 ? '4/5' : '16/9')).join('')}</div>`;
+      return `<div class="${cls} revela">${imgs.map((m) => media(m[2], m[1], m[2] ? null : (imgs.length > 1 ? '4/5' : '16/9'))).join('')}</div>`;
     }
     if (/^- /m.test(b)) return `<ul class="lista revela">${b.split('\n').map((l) => `<li>${inline(l.replace(/^- /, ''))}</li>`).join('')}</ul>`;
     return `<p class="revela">${inline(b.replace(/\n/g, ' '))}</p>`;
@@ -132,10 +143,11 @@ ${corpo}
 </html>`;
 }
 
-function cartao(p, i) {
-  const largo = i === 0 || i % 3 === 0;
-  return `<a class="projeto ${largo ? 'projeto--largo' : ''} revela" href="${url(`/projetos/${p.slug}/`)}">
-    ${p.video ? media(p.video, p.titulo, largo ? '16/9' : '1/1') : media(p.capa, 'Capa do projeto', largo ? '16/9' : '1/1')}
+function cartao(p, i, uniforme = false) {
+  const largo = !uniforme && (i === 0 || i % 3 === 0);
+  const capa = largo ? (primeiraImagem(p.body) || p.capa) : p.capa;
+  return `<a class="projeto ${largo ? 'projeto--largo' : ''} revela" data-cat="${esc(grupo(p.categoria))}" href="${url(`/projetos/${p.slug}/`)}">
+    ${p.video ? media(p.video, p.titulo, largo ? '16/9' : '4/3') : media(capa, `Capa do projeto ${p.titulo}`, largo ? '16/9' : '4/3')}
     <div class="projeto__info">
       <div><h3>${esc(p.titulo)}</h3><p>${esc(p.categoria)}${yes(p.conceptual) ? ' · Projeto conceptual' : ''}</p></div>
       <span class="projeto__ver">Ver projeto <span aria-hidden="true">→</span></span>
@@ -147,9 +159,9 @@ function cartao(p, i) {
 // ---------- página inicial ----------
 const destaques = projetos.filter((p) => yes(p.destaque)).slice(0, 6);
 const servicos = [
-  ['Identidade e design', 'Identidade visual, sistemas gráficos, materiais institucionais e peças de comunicação.', 'exemplo-identidade'],
-  ['Vídeo e movimento', 'Vídeos institucionais, campanhas, edição e motion graphics.', 'exemplo-video'],
-  ['Fotografia e conteúdo', 'Fotografia, captação aérea e conteúdos para plataformas digitais.', 'exemplo-fotografia'],
+  ['Identidade e design', 'Identidade visual, sistemas gráficos, materiais institucionais e peças de comunicação.', 'edificio-paris'],
+  ['Vídeo e movimento', 'Vídeos institucionais, campanhas, edição e motion graphics.', ''],
+  ['Fotografia e conteúdo', 'Fotografia, captação aérea e conteúdos para plataformas digitais.', 'chocolate'],
 ];
 const processo = [
   ['Entender', 'Conhecer a marca, o público e o objetivo.'],
@@ -173,7 +185,11 @@ const home = `
 <section class="seccao projetos" id="projetos" aria-labelledby="t-projetos">
   <div class="caixa">
     <div class="seccao__topo revela"><h2 id="t-projetos" class="titulo-seccao">Projetos</h2><p class="intro">Uma seleção de trabalho recente.</p></div>
-    <div class="grelha-projetos">${destaques.map(cartao).join('')}</div>
+    <div class="grelha-projetos">${destaques.map((p, i) => cartao(p, i)).join('')}</div>
+    <div class="projetos__mais revela">
+      <a class="botao botao--preto" href="${url('/projetos/')}">Ver todos os projetos (${projetos.length})</a>
+      ${site.behance ? `<a class="ligacao" href="${esc(site.behance)}" rel="noopener">Ver no Behance <span aria-hidden="true">↗</span></a>` : ''}
+    </div>
   </div>
 </section>
 
@@ -186,7 +202,7 @@ const home = `
         return `<article class="servico revela">
         <span class="servico__num">0${i + 1}</span>
         <div class="servico__texto"><h3>${t}</h3><p>${d}</p>${p ? `<a class="ligacao" href="${url(`/projetos/${p.slug}/`)}">Ver ${esc(p.titulo)} <span aria-hidden="true">→</span></a>` : ''}</div>
-        <div class="servico__img">${media(p && p.capa, t, '3/2')}</div>
+        ${p ? `<div class="servico__img">${media(p.capa, t, '4/3')}</div>` : ''}
       </article>`;
       }).join('')}
     </div>
@@ -271,13 +287,14 @@ function paginaProjeto(p, i) {
       ${yes(p.exemplo) ? '<p class="etiqueta etiqueta--fixa">Exemplo — substituir pelo projeto real</p>' : ''}
     </div>
   </header>
-  <div class="caixa caso__capa">${p.video ? media(p.video, p.titulo) : media(p.capa, 'Imagem principal do projeto')}</div>
+  ${p.video || !primeiraImagem(p.body) ? `<div class="caixa caso__capa">${p.video ? media(p.video, p.titulo) : media(p.capa, 'Imagem principal do projeto')}</div>` : ''}
   <div class="caixa caso__corpo">
     ${markdown(p.body)}
     <div class="caso__ficha revela">
       <div><h2>Cliente</h2><p>${esc(p.cliente || '—')}</p></div>
       <div><h2>Serviços</h2><ul>${servs.map((s) => `<li>${esc(s)}</li>`).join('')}</ul></div>
       <div><h2>Créditos</h2><ul>${creditos.map((c) => `<li>${esc(c)}</li>`).join('')}</ul></div>
+      ${p.behance ? `<div><h2>Também no</h2><p><a class="ligacao" href="${esc(p.behance)}" rel="noopener">Behance <span aria-hidden="true">↗</span></a></p></div>` : ''}
     </div>
   </div>
   <nav class="caso__seguinte" aria-label="Próximo projeto">
@@ -289,6 +306,26 @@ function paginaProjeto(p, i) {
 </section>`,
   });
 }
+
+// ---------- todos os projetos ----------
+const categorias = [...new Set(projetos.map((p) => grupo(p.categoria)))];
+const todos = layout({
+  titulo: 'Projetos', descricao: `Todos os projetos do ${site.nome}: identidade visual, logótipos, capas de álbum, cartazes e social media.`, caminho: '/projetos/',
+  corpo: `
+<section class="caso__topo todos">
+  <div class="caixa">
+    <h1 class="caso__titulo">Projetos</h1>
+    <p class="caso__resumo">${projetos.length} trabalhos de identidade, design gráfico e direção de arte.</p>
+    <div class="filtros" role="group" aria-label="Filtrar por categoria" hidden>
+      <button type="button" aria-pressed="true" data-filtro="">Todos</button>
+      ${categorias.map((c) => `<button type="button" aria-pressed="false" data-filtro="${esc(c)}">${esc(c)}</button>`).join('')}
+    </div>
+  </div>
+</section>
+<section class="seccao projetos projetos--todos">
+  <div class="caixa"><div class="grelha-projetos grelha-projetos--tres">${projetos.map((p, i) => cartao(p, i, true)).join('')}</div></div>
+</section>`,
+});
 
 const privacidade = layout({
   titulo: 'Política de privacidade', caminho: '/privacidade/',
@@ -306,9 +343,10 @@ const write = (p, html) => { fs.mkdirSync(path.dirname(path.join(OUT, p)), { rec
 write('index.html', layout({ caminho: '/', corpo: home, tema: 'inicio' }));
 projetos.forEach((p, i) => write(`projetos/${p.slug}/index.html`, paginaProjeto(p, i)));
 write('privacidade/index.html', privacidade);
+write('projetos/index.html', todos);
 write('404.html', layout({ titulo: 'Página não encontrada', caminho: '/404.html', corpo: `<section class="abertura abertura--curta"><div class="caixa"><h1 class="abertura__titulo">Falta aqui 1%.</h1><p class="abertura__sub">Esta página não existe.</p><div class="acoes"><a class="botao botao--preto" href="${url('/')}">Voltar ao início</a></div></div></section>` }));
 fs.cpSync(path.join(ROOT, 'assets'), path.join(OUT, 'assets'), { recursive: true });
 if (fs.existsSync(path.join(ROOT, 'media'))) fs.cpSync(path.join(ROOT, 'media'), path.join(OUT, 'media'), { recursive: true });
 fs.writeFileSync(path.join(OUT, '.nojekyll'), '');
-fs.writeFileSync(path.join(OUT, 'sitemap.xml'), `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${['/', ...projetos.map((p) => `/projetos/${p.slug}/`)].map((u) => `<url><loc>${site.url}${u}</loc></url>`).join('')}</urlset>\n`);
+fs.writeFileSync(path.join(OUT, 'sitemap.xml'), `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${['/', '/projetos/', ...projetos.map((p) => `/projetos/${p.slug}/`)].map((u) => `<url><loc>${site.url}${u}</loc></url>`).join('')}</urlset>\n`);
 console.log(`Site gerado em _site/ (${projetos.length} projetos, BASE="${BASE}")`);

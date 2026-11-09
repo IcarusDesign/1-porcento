@@ -14,8 +14,16 @@ No topo, entre as linhas `---`, ficam os dados:
 - `video`: vídeo de apresentação opcional (mp4, sem som)
 - `servicos`: lista separada por vírgulas
 - `creditos`: uma linha por pessoa, separadas por `;`
+- `behance`: link do projeto no Behance (aparece como "Também no Behance")
 
 Depois vem o texto, com títulos `## ...` e imagens `![descrição](/media/...)`.
 Várias imagens na mesma linha aparecem lado a lado.
 
 As imagens ficam na pasta `media/`. Ao guardar no GitHub, o site atualiza sozinho em 1–2 minutos.
+
+## Projetos vindos do Behance
+
+Os projetos atuais foram importados do Behance (behance.net/herminimiranda) em novembro de 2026.
+As imagens continuam alojadas no Behance; se apagar um projeto lá, as imagens desaparecem aqui.
+Para acrescentar um projeto novo do Behance, copie um destes ficheiros e troque o título,
+a capa e os links das imagens (ou peça ao Claude para importar).

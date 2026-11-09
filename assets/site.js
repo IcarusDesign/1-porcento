@@ -93,3 +93,17 @@
     }
   });
 })();
+
+// Filtro na página de todos os projetos
+(() => {
+  const f = document.querySelector('.filtros');
+  if (!f) return;
+  f.hidden = false;
+  const cards = document.querySelectorAll('.grelha-projetos--tres .projeto');
+  f.addEventListener('click', (e) => {
+    const b = e.target.closest('button');
+    if (!b) return;
+    f.querySelectorAll('button').forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
+    cards.forEach((c) => { c.hidden = !!b.dataset.filtro && c.dataset.cat !== b.dataset.filtro; c.classList.add('visivel'); });
+  });
+})();

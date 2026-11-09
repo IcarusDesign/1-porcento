@@ -3,7 +3,7 @@ titulo: Artwork & Visual — Cabo Verde
 cliente: Artwork & Visual
 categoria: Artwork e ilustração
 ano: 2026
-ordem: 3
+ordem: 2
 destaque: sim
 capa: https://mir-s3-cdn-cf.behance.net/projects/max_808_webp/1203ab256379807.Y3JvcCwxMzgwLDEwODAsMjcwLDA.png
 video:

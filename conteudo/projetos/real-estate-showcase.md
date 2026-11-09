@@ -3,8 +3,8 @@ titulo: Real Estate Showcase
 cliente: Real Estate Showcase
 categoria: Logótipo
 ano: 2026
-ordem: 7
-destaque: não
+ordem: 3
+destaque: sim
 capa: https://mir-s3-cdn-cf.behance.net/projects/max_808_webp/938083255997637.Y3JvcCwzMTcxLDI0ODEsMTY0LDA.png
 video:
 resumo:

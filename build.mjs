@@ -161,7 +161,7 @@ const destaques = projetos.filter((p) => yes(p.destaque)).slice(0, 6);
 const servicos = [
   ['Identidade e design', 'Identidade visual, sistemas gráficos, materiais institucionais e peças de comunicação.', 'edificio-paris'],
   ['Vídeo e movimento', 'Vídeos institucionais, campanhas, edição e motion graphics.', ''],
-  ['Fotografia e conteúdo', 'Fotografia, captação aérea e conteúdos para plataformas digitais.', 'prosperous'],
+  ['Fotografia e conteúdo', 'Fotografia, captação aérea e conteúdos para plataformas digitais.', 'artwork-cabo-verde'],
 ];
 const processo = [
   ['Entender', 'Conhecer a marca, o público e o objetivo.'],
@@ -187,8 +187,7 @@ const home = `
     <div class="seccao__topo revela"><h2 id="t-projetos" class="titulo-seccao">Projetos</h2><p class="intro">Uma seleção de trabalho recente.</p></div>
     <div class="grelha-projetos">${destaques.map((p, i) => cartao(p, i)).join('')}</div>
     <div class="projetos__mais revela">
-      <a class="botao botao--preto" href="${url('/projetos/')}">Ver todos os projetos (${projetos.length})</a>
-      ${site.behance ? `<a class="ligacao" href="${esc(site.behance)}" rel="noopener">Ver no Behance <span aria-hidden="true">↗</span></a>` : ''}
+      ${site.behance ? `<a class="ligacao" href="${esc(site.behance)}" rel="noopener">Mais trabalhos no Behance <span aria-hidden="true">↗</span></a>` : ''}
     </div>
   </div>
 </section>
@@ -307,26 +306,6 @@ function paginaProjeto(p, i) {
   });
 }
 
-// ---------- todos os projetos ----------
-const categorias = [...new Set(projetos.map((p) => grupo(p.categoria)))];
-const todos = layout({
-  titulo: 'Projetos', descricao: `Todos os projetos do ${site.nome}: identidade visual, logótipos, capas de álbum, cartazes e social media.`, caminho: '/projetos/',
-  corpo: `
-<section class="caso__topo todos">
-  <div class="caixa">
-    <h1 class="caso__titulo">Projetos</h1>
-    <p class="caso__resumo">${projetos.length} trabalhos de identidade, design gráfico e direção de arte.</p>
-    <div class="filtros" role="group" aria-label="Filtrar por categoria" hidden>
-      <button type="button" aria-pressed="true" data-filtro="">Todos</button>
-      ${categorias.map((c) => `<button type="button" aria-pressed="false" data-filtro="${esc(c)}">${esc(c)}</button>`).join('')}
-    </div>
-  </div>
-</section>
-<section class="seccao projetos projetos--todos">
-  <div class="caixa"><div class="grelha-projetos grelha-projetos--tres">${projetos.map((p, i) => cartao(p, i, true)).join('')}</div></div>
-</section>`,
-});
-
 const privacidade = layout({
   titulo: 'Política de privacidade', caminho: '/privacidade/',
   corpo: `<article class="caso"><header class="caso__topo"><div class="caixa"><h1 class="caso__titulo">Política de privacidade</h1></div></header>
@@ -343,10 +322,9 @@ const write = (p, html) => { fs.mkdirSync(path.dirname(path.join(OUT, p)), { rec
 write('index.html', layout({ caminho: '/', corpo: home, tema: 'inicio' }));
 projetos.forEach((p, i) => write(`projetos/${p.slug}/index.html`, paginaProjeto(p, i)));
 write('privacidade/index.html', privacidade);
-write('projetos/index.html', todos);
 write('404.html', layout({ titulo: 'Página não encontrada', caminho: '/404.html', corpo: `<section class="abertura abertura--curta"><div class="caixa"><h1 class="abertura__titulo">Falta aqui 1%.</h1><p class="abertura__sub">Esta página não existe.</p><div class="acoes"><a class="botao botao--preto" href="${url('/')}">Voltar ao início</a></div></div></section>` }));
 fs.cpSync(path.join(ROOT, 'assets'), path.join(OUT, 'assets'), { recursive: true });
 if (fs.existsSync(path.join(ROOT, 'media'))) fs.cpSync(path.join(ROOT, 'media'), path.join(OUT, 'media'), { recursive: true });
 fs.writeFileSync(path.join(OUT, '.nojekyll'), '');
-fs.writeFileSync(path.join(OUT, 'sitemap.xml'), `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${['/', '/projetos/', ...projetos.map((p) => `/projetos/${p.slug}/`)].map((u) => `<url><loc>${site.url}${u}</loc></url>`).join('')}</urlset>\n`);
+fs.writeFileSync(path.join(OUT, 'sitemap.xml'), `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${['/', ...projetos.map((p) => `/projetos/${p.slug}/`)].map((u) => `<url><loc>${site.url}${u}</loc></url>`).join('')}</urlset>\n`);
 console.log(`Site gerado em _site/ (${projetos.length} projetos, BASE="${BASE}")`);

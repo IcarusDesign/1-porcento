@@ -3,7 +3,7 @@ titulo: Pé N'Areia
 cliente: Pé N'Areia
 categoria: Identidade visual
 ano: 2026
-ordem: 2
+ordem: 4
 destaque: sim
 capa: https://mir-s3-cdn-cf.behance.net/projects/max_808_webp/7c31cf250366709.Y3JvcCwxMDA3LDc4OCwxOTcsMA.jpg
 video:

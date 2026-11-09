@@ -1,0 +1,14 @@
+{
+  "nome": "1 PORCENTO",
+  "url": "https://icarusdesign.github.io/1-porcento",
+  "descricao": "Estúdio criativo de design e produção audiovisual, com origem em Cabo Verde.",
+  "email": "",
+  "whatsapp": "",
+  "redes": [
+    { "nome": "Instagram", "url": "" },
+    { "nome": "Behance", "url": "" },
+    { "nome": "Vimeo", "url": "" }
+  ],
+  "formulario": "",
+  "_ajuda": "Preencha email (ex.: ola@1porcento.cv), whatsapp (só números com indicativo, ex.: 2389xxxxxx), os links das redes e o endereço do formulário (ex.: https://formspree.io/f/xxxx). Campos vazios ficam escondidos no site."
+}
